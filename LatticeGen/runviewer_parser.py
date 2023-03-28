@@ -1,0 +1,2 @@
+class LatticeGenParser(object):
+    pass

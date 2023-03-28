@@ -1,0 +1,21 @@
+Started at 16:46:27 on 3/14/2023
+ Hardware counter period is 0.100 us.
+ Hi_timer minimum timer interval is 0.000 to 0.100 us.
+ Minimum forced delay is around 0.200 us.
+Setting logging interval units to [us].
+    164268: before new DLL
+         2: after new DLL
+         0: before enum monitors
+         4: After enum monitors
+        24: monitor 0(0x 0000 0000)
+         0: info.Width[monitor] 2560(0x 0000 0a00)
+         0: info.Height[monitor] 1440(0x 0000 05a0)
+         0: After monitor loops
+         0: LeftSide 2560(0x 0000 0a00)
+    203607: After create window
+         1: width 1920(0x 0000 0780)
+         0: height 1200(0x 0000 04b0)
+      1551: After set texture
+      8803: After set position
+    171226: After init regional LUT
+       178: load LUT

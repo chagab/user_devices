@@ -5,13 +5,15 @@ class IBeamSmartTab(DeviceTab):
 
     def initialise_GUI(self):
         do_prop = {'ON': {}}
-        ao_prop = {'Power': {
-            'base_unit': 'mW',
-            'min': 0,
-            'max': 10,
-            'step': 1e-3,
-            'decimals': 1
-        }}
+        ao_prop = {
+            'Power': {
+                'base_unit': 'mW',
+                'min': 0,
+                'max': 10,
+                'step': 1e-3,
+                'decimals': 1
+            }
+        }
 
         # Create the output objects
         self.create_digital_outputs(do_prop)
@@ -26,10 +28,10 @@ class IBeamSmartTab(DeviceTab):
             ("Laser output power", ao_widgets)
         )
 
+    def initialise_workers(self):
         # Store the board number to be used
-        connection_object = self.settings['connection_table'].find_by_name(
-            self.device_name
-        )
+        connection_table = self.settings['connection_table']
+        connection_object = connection_table.find_by_name(self.device_name)
         self.board_number = int(connection_object.BLACS_connection)
 
         # And which scheme we're using for buffered output programming and
@@ -43,6 +45,7 @@ class IBeamSmartTab(DeviceTab):
         worker_initialisation_kwargs = \
             self.connection_table.find_by_name(self.device_name).properties
         worker_initialisation_kwargs['addr'] = self.BLACS_connection
+
         self.create_worker(
             'main_worker',
             'user_devices.IBeamSmart.blacs_worker.IBeamSmartWorker',

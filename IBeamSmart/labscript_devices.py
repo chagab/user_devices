@@ -1,6 +1,7 @@
 
 from labscript import Device, set_passed_properties
-
+import h5py
+import numpy as np
 
 class IBeamSmart(Device):
     """A labscript_device for IBeamSmart laser from Toptica using a
@@ -28,6 +29,28 @@ class IBeamSmart(Device):
         self.name = name
         self.BLACS_connection = addr
         self.USB_port = USB_port
+        self.commands = []
+
+    def add_start_command(self, command):
+        """Add a serial command that should be send at the start of the experiment"""
+        if not isinstance(command, bytes):
+            raise TypeError("command must be a bytestring")
+        self.start_commands.append(command)
+
+    def add_stop_command(self, command):
+        """Add a serial command that should be send at the end of the experiment"""
+        if not isinstance(command, bytes):
+            raise TypeError("command must be a bytestring")
+        self.stop_commands.append(command)
 
     def generate_code(self, hdf5_file):
-        Device.generate_code(self, hdf5_file)
+        # Convert the lists of commands into numpy arrays and save them to the shot file
+        # as HDF5 datasets within our device's group:
+        vlenbytes = h5py.special_dtype(vlen=bytes)
+        start_commands = np.array(self.start_commands, dtype=vlenbytes)
+        stop_commands = np.array(self.stop_commands, dtype=vlenbytes)
+        group = self.init_device_group(hdf5_file)
+        if self.start_commands:
+            group.create_dataset('START_COMMANDS', data=start_commands)
+        if self.stop_commands:
+            group.create_dataset('STOP_COMMANDS', data=stop_commands)

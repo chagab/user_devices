@@ -1,0 +1,1179 @@
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 31 of 41 
+
+VFL Firmware and Serial Interface  
+
+6.3  List of Commands 
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+P  CLREE 
+
+None or  1:[0]  
+
+P  FWRESET 
+P  GETACCCURMAX 
+
+None 
+None 
+
+P  GETACTEFF 
+
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+P  GETACTNOM 
+
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.) 
+
+P  GETAINUM 
+
+None 
+
+P  GETAISYM 
+
+1: Index, integer    
+
+P  GETAIVAL 
+
+P  GETALARM 
+
+1: Analog input  
+    signal [0..6]    
+1: Alarm case [0..4] 
+
+Restore Default Settings 
+in non-volatile memory 
+Firmware reset 
+Get the maximum current 
+setpoint in ACC mode. A 
+zero value indicates no 
+special limit in ACC mode 
+than the one returned by 
+GETLDLIM 
+Get Actual Laser Efficiency 
+values. 
+
+Get actual Nominal Laser 
+Current and Power used to 
+calculate laser efficiency. 
+
+Get the number of analog 
+input signals 
+Get the analog input 
+symbol name that has the 
+given index 
+Get specified analog input 
+value 
+Get specified alarm state 
+
+P  GETALR 
+
+None 
+
+Get alarms 
+
+P  GETALRLOG 
+
+1: Alarm case [0..4] 
+
+Get specified alarm 
+accumulated elapsed time 
+
+Version 2.3.0.0 or later 
+
+P  GETCASELIM 
+
+1: LDD Board [1-3] 
+
+Get laser diode Case 
+Temperature limit 
+parameters for the 
+specified pump 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+None 
+
+None 
+1: : Maximum Current in 
+ACC mode, integer,   mA 
+
+1: Actual Current, float, mA 
+2: Actual Power, float, mW 
+3: Actual Efficiency, float, 
+W/A 
+1: Current, float, mA 
+2: Power, float, mW 
+
+1: Number, integer 
+
+1: Symbol, string 
+
+1: Value, float 
+
+1: Flag [0, 1] 
+
+1: SHG Temperature, 
+flag [0, 1] 
+2: TEC Temperature, 
+flag [0, 1] 
+3: Pump Bias,  flag[0,1] 
+4: Loss Of Output, 
+flag [0, 1] 
+5:Case Temperature,  
+flag[0,1] 
+1: # of Hours, integer 
+[0..11930046] 
+2: # of seconds, integer 
+[0..3599] 
+1: Minimum Temperature,  
+float   °Celsius 
+2: Maximum  
+Temperature,  float   
+°Celsius 
+
+P  GETCASETHR 
+
+None 
+
+Get laser diode Case 
+Index and Case 
+Temperature thresholds 
+to generate alarm 
+
+1: LDD Board [1-3] 
+2: Low Temperature,  float   
+°Celsius 
+3: High  Temperature,  
+float   °Celsius 
+
+P  GETCHKEFF 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+1: Check Index: [0: Last 
+Check, 1: Min Eff. Check] 
+
+Get Laser Efficiency values 
+for the specified Check 
+Index. 
+
+1: Current, float, mA 
+2: Power, float, mW 
+3: Efficiency, float, W/A 
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 32 of 41 
+
+VFL Firmware and Serial Interface  
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+Get Laser Efficiency 
+ACTUAL Check State. 
+
+1: State, integer [0:Off, 
+1:Low, 2: High, 3: Fault] 
+
+P  GETCHKSTATE 
+
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+P  GETFAULT 
+
+P  GETFLT 
+
+1: Fault case [0..4]  
+or 
+[0..5] (For Laser with 
+OutPwr Efficiency 
+Protection.) 
+None 
+
+The State is OFF if the laser 
+not running in APC. 
+
+The State is Low if actual 
+current is below the Nominal 
+Current.  
+
+The State is High if actual 
+current is above the Nominal 
+Current and laser Efficiency 
+is being checked.  
+
+The State is Fault if the laser 
+Efficiency has been below 
+OutPwr Fault Threshold for 
+a significant time and laser 
+has automatically shutdown. 
+Get specified fault 
+
+Get faults 
+
+1: Flag [0, 1] 
+
+1: SHG temperature, 
+         flag [0, 1] 
+2: Tec temperature,  
+          flag [0, 1] 
+3: Laser diode current,  
+          flag [0, 1] 
+4: Watchdog timeout, 
+          flag [0, 1] 
+5: Case temperature, 
+         flag [0, 1] 
+
+6: OutPwr Efficiency, 
+         flag [0, 1] 
+(For Laser with OutPwr 
+Efficiency Protection.) 
+1: Fault Count, integer 
+[0..65535] 
+
+P  GETFLTLOG 
+
+Version 2.3.0.0 or later 
+
+1: Fault case [0..4]  
+or 
+[0..5] (For Laser with 
+OutPwr Efficiency 
+Protection.) 
+
+Get specified fault 
+accumulated latched 
+counts 
+
+P  GETFWREV 
+
+None 
+
+P  GETINPUT 
+
+11: Input index: [0: 
+Interlock input, 
+1: Hardware Bootload 
+input,  
+
+Only for Key version : 
+
+2: Key OFF input 
+
+Get laser controller 
+firmware revision 
+Get specified physical 
+input actual state 
+
+1: Version, string 
+
+1: Flag [0:Off, 1: On] 
+
+P  GETLASERSTATE 
+
+None 
+
+Get laser actual state 
+
+P  GETLASERSTATENUM 
+
+None 
+
+Get the number of laser 
+different states 
+
+1: Laser State Code, 
+integer 
+1: Number, integer 
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 33 of 41 
+
+VFL Firmware and Serial Interface  
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+P  GETLASERSTATESYM 
+
+1:Index, integer 
+
+P  GETLDCUR 
+
+1: LD pump [1-3] 
+
+P  GETLDENABLE 
+
+None 
+
+P  GETLDLIM 
+
+1: LD pump [1-3] 
+
+P  GETLDMODE 
+
+Only for VFL MOPA  
+
+1: LD pump [1: Seed, 
+2:PreAmp, 3:Booster] 
+
+P  GETLDSTATE 
+
+1: LD pump [1-3] 
+
+P  GETLOOLIM 
+
+None 
+
+P  GETLOOLIMPC 
+
+None 
+
+P  GETMINEFFPC 
+
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+P  GETMODEL 
+P  GETNOMCUR 
+
+None 
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+P  GETNOMEFF 
+
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.)  
+
+P  GETOUT 
+
+None 
+
+Get the laser state code 
+and symbol name for the 
+specified index 
+
+Get specified laser diode 
+current set point when 
+laser in manual mode 
+Get laser software enable 
+flag value 
+Get laser diode limit 
+parameters for the 
+specified pump 
+
+Get laser diode control 
+mode when laser in 
+automatic mode 
+
+Get the State for the 
+specified laser diode 
+driver 
+Get the Low and High 
+power difference relative 
+to the output power set 
+point (In APC mode to 
+declare the LOS output 
+Alarm 
+Get the Low and High 
+power difference relative 
+to the output power set 
+point (In APC mode to 
+declare the LOS output 
+Alarm 
+Get Percent of Nominal 
+Laser Efficiency Minimum 
+Threshold to generate 
+OutPwr Efficiency Fault.  
+Get laser model number 
+Get BOL Nominal Laser 
+Current used as a target to 
+calculate laser efficiency.  
+
+Get BOL Nominal Laser 
+Efficiency used as a 
+Reference value to generate 
+OutPwr Efficiency Fault. 
+Get outputs 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+1; Laser State Code, 
+integer 
+2: Laser State Symbol, 
+string 
+1: Current, integer,  
+    mA 
+
+1: Flag [0: Disable, 1: 
+Enable] 
+1: Minimum Current, 
+integer,   mA 
+2: Maximum Current, 
+integer,   mA 
+3: Current Protection 
+Threshold, integer,   
+
+1:Mode, integer,[ 0: ACC, 
+1: APC] 
+
+1: State [0: Off, 1:On, 2: 
+Turning Off, 3:Turning On, 
+4: Fault] 
+1: Low power, Float, dB 
+2: High Power Float, dB 
+
+1: Low power, Float, % 
+2: High Power Float, % 
+
+1: Percent of Nominal 
+Efficiency, integer, % 
+[0..100] 
+
+1: Model, string 
+1: Current, float, mA 
+
+1: Efficiency, float, W/A 
+
+1: Fault 
+         flag [0, 1] 
+2: Laser ON,  
+         flag [0, 1] 
+3: Laser Warming up and 
+not ready to operate. 
+         flag [0, 1] 
+4: Service Affected,  
+         flag [0, 1] 
+
+P  GETPOWER 
+
+1: 0 
+
+Get laser output power 
+set point in APC mode 
+
+1: Power, float,  
+    mW 
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 34 of 41 
+
+VFL Firmware and Serial Interface  
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+P  GETPOWERENABLE 
+
+None 
+
+Get laser mode 
+
+P  GETPOWERSETPTLIM 
+
+1: 0 
+
+P  GETSHGCMD 
+
+None 
+
+Only for SHG Temp 
+Tuning version 
+
+Get limit parameters for 
+the laser output power set 
+point 
+
+Get SHG actual 
+command 
+
+P  GETSHGTEMP 
+
+None 
+
+P  GETSHGTUNERDY 
+
+None 
+
+Get SHG sensor 
+temperature set point 
+Get SHG Ready for 
+Tuning state and left time 
+
+P  GETSHGTUNESTATE 
+
+None 
+
+Get SHG Tuning state 
+and error status 
+
+P  GETSN 
+P  GETSTATE 
+
+None 
+None 
+
+Get laser serial number 
+Get laser controller state 
+
+P  GETSTATUS 
+
+1: LDD Board [1-3] 
+
+Get the State for the 
+specified laser diode 
+driver board 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+1:Mode, integer,[ 0: ACC, 
+1: APC] 
+1: Minimum Power, float,  
+mW 
+2: Maximum Power, float,   
+mW 
+1: SHG Command [0: No 
+command executing, 
+1:SHG Tuning 
+w/prerequisites initiated,  
+2: SHG Tuning aborting, 
+99: SHG Tuning w/out 
+prerequisites initiated ] 
+1: Float, °Celsius 
+
+1: State [0: SHG Tuning 
+w/prerequisites Not 
+Ready, 1:SHG Tuning 
+w/prerequisites Ready] 
+
+2: # of Hours of laser 
+operation left before next 
+scheduled SHG Tuning, 
+
+3: # of Seconds of laser 
+operation left before end 
+of warm-up at actual 
+output power, integer,  
+[0..65535] 
+1: State [0: Tuning OFF, 
+1:Tuning Completed, 
+2:Tuning Aborted, 3: 
+Tuning In Progress] 
+
+2:Error Status Bitmap 
+[0..31]  where: 
+ 0: No Error,  
+1: Laser not running in 
+espected state,  
+2: SHG Temp not set,  
+4: SHG Temp not 
+stabilized,  
+8: Output Power not 
+stabilized in APC mode  
+16: SHG Temp out of 
+limits]  
+32: LD Current not 
+stabilized in ACC mode, 
+64: No Power Peak 
+detected in ACC mode 
+1: Serial #, string 
+1: State, integer [0:Init, 1: 
+Normal, 2: ALS] 
+
+1: LDD Alarms [0..511] 
+2: LDD Faults [0..1023] 
+3: LDD state [0:Init, 
+1:Normal, 2:ALS] 
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 35 of 41 
+
+VFL Firmware and Serial Interface  
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+P  GETTECSETPT 
+
+P  GETTECSTATE 
+
+1: TEC driver [1-3: TEC1-
+3, 4:SHG, 5:TEC5] 
+1: TEC driver [1-3: TEC1-
+3, 4:SHG, 5:TEC5] 
+
+Get specified TEC driver 
+temperature set point 
+Get the State for the 
+specified TEC driver 
+
+P  GETTIMEOP 
+
+None 
+
+Get Time of Operation  of  
+laser head 
+
+P  GETTIMEOPCTRL 
+
+None 
+
+Get Time of Operation  of  
+laser controller 
+
+P 
+
+LASERSTATE 
+
+Only for VFL MOPA  
+
+1: Laser Stage [1: Seed, 
+2:PreAmp, 3:Booster] 
+
+Get specified laser stage  
+actual state flag 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+1: Temperature, Float, 
+°Celsius 
+1: State [0: Off, 1:On, 2: 
+Turning Off, 3:Turning On, 
+4: Fault] 
+1: # of Hours, integer 
+[0..11930046] 
+2: # of seconds, integer 
+[0..3599] 
+3: # of msec, integer 
+[0.999] 
+1: # of Hours, integer 
+[0..11930046] 
+2: # of seconds, integer 
+[0..3599] 
+3: # of msec, integer 
+[0.999] 
+1: Flag [0 : Output not OK 
+, 1 : Output OK] 
+
+P 
+
+LDCURRENT 
+
+1: LD pump [1-3] 
+
+P 
+
+LDTEMP 
+
+1: LD pump [1: LD1] 
+
+P  NOOPERATION 
+P  POWER 
+
+None 
+1: Power INDEX 
+[0:Output, 1-3: LD1-3] 
+
+Get specified laser diode 
+actual current 
+Get specified laser diode 
+actual case temperature 
+Do nothing .  
+Get laser monitored 
+powers 
+
+1: Current, integer,  
+    mA 
+1: Temperature, Float, 
+°Celsius 
+None 
+1: Power, float,  
+    mW 
+
+P  POWERENABLE 
+
+P  RSTEFF 
+
+1:Mode, integer,[ 0: ACC, 
+1: APC] 
+None 
+
+(For Laser with OutPwr 
+Efficiency Protection.) 
+
+P  SAVEALL 
+
+None or 1:[0] 
+
+P  SETCASETHR 
+
+1: LDD Board [1-3] 
+2: Low Temperature,  float   
+°Celsius 
+3: High  Temperature,  
+float   °Celsius 
+
+Set laser mode 
+
+Reset  Laser Efficiency Last 
+and Min Eff. Check stats. 
+
+Save actual settings in 
+non-volatile memory  
+Set laser diode Case 
+Index and Case 
+Temperature thresholds 
+to generate alarm 
+
+P  SETLDCUR 
+
+P  SETLDENABLE 
+
+1: LD pump [1-3] 
+2: Current, integer, mA 
+
+1: Flag [0: Disable, 1: 
+Enable] 
+
+Set specified laser diode 
+current set point when 
+laser in manual mode 
+Set laser software enable 
+flag value 
+
+P  SETLOOLIM 
+
+1: Low power, Float, dB 
+2: High Power Float, dB 
+
+Set the Low and High 
+power difference relative 
+to the output power set 
+point (In APC mode to 
+declare the LOS output 
+Alarm 
+
+None 
+
+None 
+
+None 
+
+None 
+
+None 
+
+None 
+
+None 
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Document: DOC-04384R6 
+
+Date: Jul 23, 2020 
+
+Page 36 of 41 
+
+VFL Firmware and Serial Interface  
+
+Command 
+Outgoing request submitted from HyperTerminal 
+
+P/T 
+
+Name 
+
+Arguments 
+
+Description 
+
+Reply 
+Incoming positive 
+response returned by the 
+amplifier 
+Arguments 
+
+P  SETLOOLIMPC 
+
+1: Low power, Float, % 
+2: High Power Float, % 
+
+P  SETPOWER 
+
+P  SETSHGCMD 
+
+P  SETSHGTEMP 
+
+P  SHAI 
+P  SHALR 
+P  SHFAULT 
+P  SHGTEMP 
+
+P  SHLASER 
+
+P  TECCURRENT 
+
+P  TECTEMP 
+
+P  VCCMON 
+
+1: 0 
+2: Power, float,  
+    mW 
+1: SHG Command 
+[1:Initiate SHG Tuning 
+w/prerequisites, 2: Abort 
+SHG Tuning, 99: Initiate 
+SHG Tuning w/out 
+prerequisites] 
+1: Float, °Celsius 
+
+None 
+None 
+None 
+None 
+
+None 
+
+1: TEC driver [1-3: TEC1-
+3, 4:SHG, 5:TEC5] 
+1: TEC driver [1-3: TEC1-
+3, 4:SHG, 5:TEC5] 
+1: LD pump [1] 
+2:VCC index[1:12Volt 
+VCC, 2:5Volt VCC] 
+
+Set the Low and High 
+power difference relative 
+to the output power set 
+point (In APC mode to 
+declare the LOS output 
+Alarm 
+Set laser output power set 
+point in APC mode 
+
+None 
+
+None 
+
+Set SHG command 
+
+None 
+
+None 
+
+Set SHG sensor 
+temperature set point 
+Show analog input signals    
+Show alarms 
+Show faults 
+Get SHG sensor actual 
+temperature 
+Show Laser settings and 
+measurements 
+Get specified TEC driver 
+actual current 
+Get specified TEC sensor 
+actual temperature 
+Get the specified VCC 
+voltage  
+
+1: Float, °Celsius 
+
+1: Current, integer,  
+    mA 
+1: Float, °Celsius 
+
+1: Voltage, float, Volt 
+
+6.3.1  MCU and LDD States 
+
+Code  
+0 
+1 
+2 
+
+Symbol 
+
+ST_INIT 
+ST_NORMAL 
+ST_ALS 
+
+Initialization state 
+Operational state 
+Fault state 
+
+Meaning 
+
+6.3.2  Laser States 
+
+    Code 
+
+Symbol 
+
+Meaning 
+
+0 
+
+6 
+
+7 
+
+8 
+
+20 
+
+31 
+
+41 
+
+42 
+
+OFF 
+
+KEYLOCK 
+
+INTERLOCK 
+
+FAULT 
+
+STARTUP 
+
+Laser driver disabled by user. TEC drivers are enabled. 
+Laser driver disabled. Key must be switched OFF then ON. (Only for 
+KEY version) 
+Laser driver disabled by interlock input signal 
+
+Laser in fault conditions 
+
+Laser driver ready to start up. 
+
+MANUAL_TURNING_ON 
+
+Laser driver turning on in manual mode. 
+
+MANUAL_ON 
+
+AUTO_ON 
+
+Laser driver running in manual mode. 
+
+Laser driver running in automatic mode             Only for not VFL MOPA  
+
+No part of this document may be disclosed, reproduced or published without written consent from MPBC.  
+This document must be rendered illegible when it is discarded. 
+
+MPB Communications Inc. - All Rights Reserved 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

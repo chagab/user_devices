@@ -1,0 +1,2 @@
+class LLSLaserArrayParser(object):
+    pass

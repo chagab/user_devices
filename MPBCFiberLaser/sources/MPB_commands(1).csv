@@ -1,0 +1,572 @@
+""
+""
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+CLREE
+None or 1:[0]
+Restore Default Settings"
+"in non-volatile memory
+None
+P
+FWRESET
+None
+Firmware reset
+None
+P
+GETACCCURMAX
+None
+Get the maximum current setpoint in ACC mode. A zero value indicates no special limit in ACC mode than the one returned by"
+"GETLDLIM
+1: : Maximum Current in ACC mode, integer, mA
+P
+GETACTEFF"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get Actual Laser Efficiency values.
+1: Actual Current, float, mA 2: Actual Power, float, mW"
+"3: Actual Efficiency, float, W/A
+P
+GETACTNOM"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get actual Nominal Laser"
+"Current and Power used to calculate laser efficiency.
+1: Current, float, mA"
+"2: Power, float, mW
+P
+GETAINUM
+None
+Get the number of analog"
+"input signals
+1: Number, integer
+P
+GETAISYM
+1: Index, integer
+Get the analog input symbol name that has the"
+"given index
+1: Symbol, string
+P
+GETAIVAL
+1: Analog input"
+"signal [0..6]
+Get specified analog input"
+"value
+1: Value, float
+P
+GETALARM
+1: Alarm case [0..4]
+Get specified alarm state
+1: Flag [0, 1]
+P
+GETALR
+None
+Get alarms
+1: SHG Temperature,"
+"flag [0, 1]"
+"2: TEC Temperature,"
+"flag [0, 1]"
+"3: Pump Bias, flag[0,1] 4: Loss Of Output,"
+"flag [0, 1]"
+"5:Case Temperature, flag[0,1]
+P
+GETALRLOG"
+""
+"Version 2.3.0.0 or later
+1: Alarm case [0..4]
+Get specified alarm accumulated elapsed time
+1: # of Hours, integer [0..11930046]"
+"2: # of seconds, integer [0..3599]
+P
+GETCASELIM
+1: LDD Board [1-3]
+Get laser diode Case Temperature limit"
+""
+"2: Maximum Temperature, float"
+""
+"2: Low Temperature, float"
+""
+""
+""
+"(For Laser with OutPwr Efficiency Protection.)
+1: Check Index: [0: Last Check, 1: Min Eff. Check]
+Get Laser Efficiency values for the specified Check Index.
+1: Current, float, mA 2: Power, float, mW"
+"3: Efficiency, float, W/A"
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+GETCHKSTATE"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get Laser Efficiency ACTUAL Check State."
+""
+"The State is OFF if the laser not running in APC."
+""
+"The State is Low if actual current is below the Nominal Current."
+""
+"The State is High if actual current is above the Nominal Current and laser Efficiency is being checked."
+""
+"The State is Fault if the laser Efficiency has been below OutPwr Fault Threshold for a significant time and laser"
+"has automatically shutdown.
+1: State, integer [0:Off, 1:Low, 2: High, 3: Fault]
+P
+GETFAULT
+1: Fault case [0..4] or"
+"[0..5] (For Laser with OutPwr Efficiency Protection.)
+Get specified fault
+1: Flag [0, 1]
+P
+GETFLT
+None
+Get faults
+1: SHG temperature,"
+"flag [0, 1]"
+"2: Tec temperature,"
+"flag [0, 1]"
+"3: Laser diode current, flag [0, 1]"
+"4: Watchdog timeout,"
+"flag [0, 1]"
+"5: Case temperature,"
+"flag [0, 1]"
+""
+"6: OutPwr Efficiency,"
+"flag [0, 1]"
+"(For Laser with OutPwr Efficiency Protection.)
+P
+GETFLTLOG"
+""
+"Version 2.3.0.0 or later
+1: Fault case [0..4] or"
+"[0..5] (For Laser with OutPwr Efficiency Protection.)
+Get specified fault accumulated latched counts
+1: Fault Count, integer [0..65535]
+P
+GETFWREV
+None
+Get laser controller"
+"firmware revision
+1: Version, string
+P
+GETINPUT
+11: Input index: [0: Interlock input,"
+"1: Hardware Bootload input,"
+"Only for Key version : 2: Key OFF input
+Get specified physical input actual state
+1: Flag [0:Off, 1: On]
+P
+GETLASERSTATE
+None
+Get laser actual state
+1: Laser State Code, integer
+P
+GETLASERSTATENUM
+None
+Get the number of laser"
+"different states
+1: Number, integer"
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+GETLASERSTATESYM
+1:Index, integer
+Get the laser state code and symbol name for the specified index
+1; Laser State Code, integer"
+"2: Laser State Symbol, string
+P
+GETLDCUR
+1: LD pump [1-3]
+Get specified laser diode"
+"current set point when laser in manual mode
+1: Current, integer, mA
+P
+GETLDENABLE
+None
+Get laser software enable"
+"flag value
+1: Flag [0: Disable, 1:"
+"Enable]
+P
+GETLDLIM
+1: LD pump [1-3]
+Get laser diode limit parameters for the specified pump
+1: Minimum Current, integer, mA"
+"2: Maximum Current, integer, mA"
+"3: Current Protection Threshold, integer,"
+""
+"P
+GETLDMODE"
+""
+"Only for VFL MOPA
+1: LD pump [1: Seed, 2:PreAmp, 3:Booster]
+Get laser diode control mode when laser in automatic mode
+1:Mode, integer,[ 0: ACC, 1: APC]
+P
+GETLDSTATE
+1: LD pump [1-3]
+Get the State for the"
+"specified laser diode driver
+1: State [0: Off, 1:On, 2:"
+"Turning Off, 3:Turning On, 4: Fault]
+P
+GETLOOLIM
+None
+Get the Low and High power difference relative to the output power set point (In APC mode to"
+"declare the LOS output Alarm
+1: Low power, Float, dB 2: High Power Float, dB
+P
+GETLOOLIMPC
+None
+Get the Low and High power difference relative to the output power set point (In APC mode to"
+"declare the LOS output Alarm
+1: Low power, Float, % 2: High Power Float, %
+P
+GETMINEFFPC"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get Percent of Nominal"
+"Laser Efficiency Minimum Threshold to generate OutPwr Efficiency Fault.
+1: Percent of Nominal"
+"Efficiency, integer, % [0..100]
+P
+GETMODEL
+None
+Get laser model number
+1: Model, string
+P
+GETNOMCUR"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get BOL Nominal Laser Current used as a target to calculate laser efficiency.
+1: Current, float, mA
+P
+GETNOMEFF"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Get BOL Nominal Laser Efficiency used as a"
+"Reference value to generate OutPwr Efficiency Fault.
+1: Efficiency, float, W/A
+P
+GETOUT
+None
+Get outputs
+1: Fault"
+"flag [0, 1]"
+"2: Laser ON,"
+"flag [0, 1]"
+"3: Laser Warming up and not ready to operate."
+"flag [0, 1]"
+"4: Service Affected,"
+"flag [0, 1]
+P
+GETPOWER
+1: 0
+Get laser output power"
+"set point in APC mode
+1: Power, float,"
+"mW"
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+GETPOWERENABLE
+None
+Get laser mode
+1:Mode, integer,[ 0: ACC,"
+"1: APC]
+P
+GETPOWERSETPTLIM
+1: 0
+Get limit parameters for the laser output power set point
+1: Minimum Power, float, mW"
+"2: Maximum Power, float, mW
+P
+GETSHGCMD"
+"Only for SHG Temp Tuning version
+None
+Get SHG actual"
+"command
+1: SHG Command [0: No"
+"command executing, 1:SHG Tuning w/prerequisites initiated, 2: SHG Tuning aborting, 99: SHG Tuning w/out"
+"prerequisites initiated ]
+P
+GETSHGTEMP
+None
+Get SHG sensor"
+""
+""
+"2: # of Hours of laser operation left before next scheduled SHG Tuning,"
+""
+""
+"3: # of Seconds of laser operation left before end of warm-up at actual output power, integer,"
+"[0..65535]
+P
+GETSHGTUNESTATE
+None
+Get SHG Tuning state and error status
+1: State [0: Tuning OFF, 1:Tuning Completed, 2:Tuning Aborted, 3: Tuning In Progress]"
+""
+"2:Error Status Bitmap [0..31] where:"
+"0: No Error,"
+"1: Laser not running in espected state,"
+"2: SHG Temp not set, 4: SHG Temp not stabilized,"
+"8: Output Power not stabilized in APC mode 16: SHG Temp out of limits]"
+"32: LD Current not stabilized in ACC mode, 64: No Power Peak"
+"detected in ACC mode
+P
+GETSN
+None
+Get laser serial number
+1: Serial #, string
+P
+GETSTATE
+None
+Get laser controller state
+1: State, integer [0:Init, 1:"
+"Normal, 2: ALS]
+P
+GETSTATUS
+1: LDD Board [1-3]
+Get the State for the specified laser diode driver board
+1: LDD Alarms [0..511]"
+"2: LDD Faults [0..1023]"
+"3: LDD state [0:Init, 1:Normal, 2:ALS]"
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+GETTECSETPT
+1: TEC driver [1-3: TEC1-"
+"3, 4:SHG, 5:TEC5]
+Get specified TEC driver"
+"temperature set point
+1: Temperature, Float,"
+""
+"3, 4:SHG, 5:TEC5]
+Get the State for the specified TEC driver
+1: State [0: Off, 1:On, 2:"
+"Turning Off, 3:Turning On, 4: Fault]
+P
+GETTIMEOP
+None
+Get Time of Operation of laser head
+1: # of Hours, integer [0..11930046]"
+"2: # of seconds, integer [0..3599]"
+"3: # of msec, integer [0.999]
+P
+GETTIMEOPCTRL
+None
+Get Time of Operation of"
+"laser controller
+1: # of Hours, integer"
+"[0..11930046]"
+"2: # of seconds, integer [0..3599]"
+"3: # of msec, integer [0.999]
+P
+LASERSTATE"
+""
+"Only for VFL MOPA
+1: Laser Stage [1: Seed, 2:PreAmp, 3:Booster]
+Get specified laser stage actual state flag
+1: Flag [0 : Output not OK"
+", 1 : Output OK]
+P
+LDCURRENT
+1: LD pump [1-3]
+Get specified laser diode"
+"actual current
+1: Current, integer,"
+"mA
+P
+LDTEMP
+1: LD pump [1: LD1]
+Get specified laser diode"
+"actual case temperature
+1: Temperature, Float,"
+""
+"[0:Output, 1-3: LD1-3]
+Get laser monitored powers
+1: Power, float, mW
+P
+POWERENABLE
+1:Mode, integer,[ 0: ACC,"
+"1: APC]
+Set laser mode
+None
+P
+RSTEFF"
+""
+"(For Laser with OutPwr Efficiency Protection.)
+None
+Reset Laser Efficiency Last and Min Eff. Check stats.
+None
+P
+SAVEALL
+None or 1:[0]
+Save actual settings in"
+"non-volatile memory
+None
+P
+SETCASETHR
+1: LDD Board [1-3]"
+"2: Low Temperature, float"
+""
+""
+"2: Current, integer, mA
+Set specified laser diode current set point when"
+"laser in manual mode
+None
+P
+SETLDENABLE
+1: Flag [0: Disable, 1: Enable]
+Set laser software enable flag value
+None
+P
+SETLOOLIM
+1: Low power, Float, dB 2: High Power Float, dB
+Set the Low and High power difference relative to the output power set point (In APC mode to declare the LOS output"
+"Alarm
+None"
+""
+"Command"
+"Outgoing request submitted from HyperTerminal
+Reply"
+"Incoming positive response returned by the"
+"amplifier
+P/T
+Name
+Arguments
+Description
+Arguments
+P
+SETLOOLIMPC
+1: Low power, Float, % 2: High Power Float, %
+Set the Low and High power difference relative to the output power set point (In APC mode to declare the LOS output"
+"Alarm
+None
+P
+SETPOWER
+1: 0"
+"2: Power, float, mW
+Set laser output power set point in APC mode
+None
+P
+SETSHGCMD
+1: SHG Command [1:Initiate SHG Tuning w/prerequisites, 2: Abort SHG Tuning, 99: Initiate"
+""
+"temperature set point
+None
+P
+SHAI
+None
+Show analog input signals
+
+P
+SHALR
+None
+Show alarms
+
+P
+SHFAULT
+None
+Show faults
+
+P
+SHGTEMP
+None
+Get SHG sensor actual"
+""
+"measurements
+
+P
+TECCURRENT
+1: TEC driver [1-3: TEC1-"
+"3, 4:SHG, 5:TEC5]
+Get specified TEC driver"
+"actual current
+1: Current, integer,"
+"mA
+P
+TECTEMP
+1: TEC driver [1-3: TEC1-"
+"3, 4:SHG, 5:TEC5]
+Get specified TEC sensor"
+""
+"2:VCC index[1:12Volt VCC, 2:5Volt VCC]
+Get the specified VCC voltage
+1: Voltage, float, Volt"
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""
+""

@@ -1,0 +1,2 @@
+class MPBCFiberLaserParser(object):
+    pass

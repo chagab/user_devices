@@ -1,7 +1,8 @@
 from blacs.tab_base_classes import Worker
-from labscript_utils import properties
-from user_devices.IBeamSmart.IBeamSmart import IBeamSmart
+# This needs to be imported to use h5py
+import labscript_utils.h5_lock
 import h5py
+# from labscript_utils import properties
 
 
 class IBeamSmartWorker(Worker):
@@ -9,6 +10,8 @@ class IBeamSmartWorker(Worker):
     def init(self):
         """This method initialises communications with the device. Not to be
         confused with the standard python class __init__ method."""
+        global IBeamSmart
+        from .IBeamSmart import IBeamSmart
         self.IBeamSmart = IBeamSmart(self.USB_port)
         # Each shot, we will remember the shot file for the duration of that shot
         self.shot_file = None
@@ -16,6 +19,7 @@ class IBeamSmartWorker(Worker):
     def program_manual(self, values):
         """This method allows for user control of the device via the BLACS_tab,
         setting outputs to the values set in the BLACS_tab widgets."""
+        print(values)
         if values['ON']:
             self.IBeamSmart.on()
         else:
@@ -28,13 +32,18 @@ class IBeamSmartWorker(Worker):
     def check_remote_values(self):
         """This method reads the current settings of the device, updating the
         BLACS_tab widgets to reflect these values."""
-        pass
+        current_settings = {
+            'Power': self.IBeamSmart.get_power(),
+            'ON': self.IBeamSmart.get_laser_status() == 'ON'
+        }
+        return current_settings
 
     def transition_to_buffered(self, device_name, h5_file, front_panel_values, refresh):
         """This method transitions the device to buffered shot mode, reading the
         shot h5 file and taking the saved instructions from
         labscript_device.generate_code and sending the appropriate commands to
         the hardware."""
+        print(front_panel_values)
         self.shot_file = h5_file  # We'll need this in transition_to_manual
         with h5py.File(self.shot_file, 'r') as hdf5_file:
             group = hdf5_file[f'devices/{self.device_name}']
@@ -46,8 +55,8 @@ class IBeamSmartWorker(Worker):
         # communicating with the hardware, because other processes cannot open the file
         # whilst we still have it open
         for command in start_commands:
-            print(f'sending command: {repr(command)}')
-            self.IBeamSmart.ser.write(f'{command}\r\n'.encode())
+            print(f'sending command: {command}')
+            self.IBeamSmart.send_bytes_command(command)
         return {}
 
     def transition_to_manual(self):
@@ -65,13 +74,13 @@ class IBeamSmartWorker(Worker):
         # communicating with the hardware, because other processes cannot open the file
         # whilst we still have it open
         for command in stop_commands:
-            print(f'sending command: {repr(command)}')
-            self.IBeamSmart.ser.write(f'{command}\r\n'.encode())
+            print(f'sending command: {command}')
+            self.IBeamSmart.send_bytes_command(command)
         return True
 
     def shutdown(self):
         # Called when BLACS closes
-        self.IBeamSmart.__del__()
+        del self.IBeamSmart
 
     def abort_buffered(self):
         # Called when a shot is aborted. We may or may not want to run

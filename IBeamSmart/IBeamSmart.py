@@ -30,24 +30,39 @@ class IBeamSmart:
         if self.ser.is_open:
             self.ser.close()
 
+    def send_bytes_command(self, bytes_command) -> bool:
+        number_of_bytes_to_write = len(bytes_command)
+        number_of_bytes_written = self.ser.write(bytes_command)
+        self.ser.readline()
+        success = number_of_bytes_to_write == number_of_bytes_written
+        assert success
+
+    def send_str_command(self, command: str) -> None:
+        bytes_command = f'{command}\r\n'.encode()
+        number_of_bytes_to_write = len(bytes_command)
+        number_of_bytes_written = self.ser.write(bytes_command)
+        self.ser.readline()
+        success = number_of_bytes_to_write == number_of_bytes_written
+        assert success
+
     def on(self) -> None:
-        self.ser.write(b'la on\r\n')
+        self.send_str_command('la on')
         print(f'status: {self.get_laser_status()}')
         print(f'power: {self.get_power()} mW')
 
     def off(self) -> None:
-        self.ser.write(b'la off\r\n')
+        self.send_str_command('la off')
         print(f'status: {self.get_laser_status()}')
 
     def set_power(self, pow: float) -> None:
         """Set the power of the laser in mW on a given channel"""
-        self.ser.write(f'ch 1 pow {pow}\r\n'.encode())
-        self.ser.write(f'ch 2 pow {pow}\r\n'.encode())
+        self.send_str_command(f'ch 1 pow {pow}')
+        self.send_str_command(f'ch 2 pow {pow}')
         print(f'power: {self.get_power()} mW')
 
     def get_power(self) -> int:
         """Return the power of the laser in mW"""
-        self.ser.write(b'sh pow\r\n')
+        self.send_str_command('sh pow')
         response = self.ser.readline().decode('unicode_escape')
         # a regular expression is used to find all the digit in the response
         # from the response format, we know there is only one match
@@ -56,6 +71,6 @@ class IBeamSmart:
         return pow_mW
 
     def get_laser_status(self) -> str:
-        self.ser.write(b'sta la\r\n')
+        self.send_str_command('sta la')
         response = self.ser.readline().decode('unicode_escape')[:-2]
         return response

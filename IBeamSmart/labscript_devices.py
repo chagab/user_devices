@@ -30,7 +30,8 @@ class IBeamSmart(Device):
         self.name = name
         self.BLACS_connection = addr
         self.USB_port = USB_port
-        self.commands = []
+        self.start_commands = []
+        self.stop_commands = []
 
     def add_start_command(self, command):
         """Add a serial command that should be send at the start of the experiment"""
@@ -43,6 +44,16 @@ class IBeamSmart(Device):
         if not isinstance(command, bytes):
             raise TypeError("command must be a bytestring")
         self.stop_commands.append(command)
+
+    def init(self, power: float) -> None:
+        self.add_start_command(b"la on\r\n")
+        self.add_start_command(f'ch 1 pow {power}\r\n'.encode())
+        self.add_start_command(f'ch 2 pow {power}\r\n'.encode())
+
+    def terminate(self) -> None:
+        self.add_stop_command(b'ch 1 pow 0\r\n')
+        self.add_stop_command(b'ch 2 pow 0\r\n')
+        self.add_stop_command(b'la off\r\n')
 
     def generate_code(self, hdf5_file):
         # Convert the lists of commands into numpy arrays and save them to the shot file

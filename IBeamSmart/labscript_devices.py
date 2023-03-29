@@ -3,6 +3,7 @@ from labscript import Device, set_passed_properties
 import h5py
 import numpy as np
 
+
 class IBeamSmart(Device):
     """A labscript_device for IBeamSmart laser from Toptica using a
     serial interface.
@@ -10,7 +11,7 @@ class IBeamSmart(Device):
         - termination: character signalling end of response
 
     device_properties (set per shot):
-        - timeout: in seconds for response to queries over visa interface
+        - timeout:  in seconds for response to queries over visa interface
         - 
     """
 

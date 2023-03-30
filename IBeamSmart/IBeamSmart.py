@@ -30,7 +30,7 @@ class IBeamSmart:
         if self.ser.is_open:
             self.ser.close()
 
-    def send_bytes_command(self, bytes_command) -> bool:
+    def send_bytes_command(self, bytes_command: bytes) -> None:
         number_of_bytes_to_write = len(bytes_command)
         number_of_bytes_written = self.ser.write(bytes_command)
         self.ser.readline()
@@ -39,11 +39,7 @@ class IBeamSmart:
 
     def send_str_command(self, command: str) -> None:
         bytes_command = f'{command}\r\n'.encode()
-        number_of_bytes_to_write = len(bytes_command)
-        number_of_bytes_written = self.ser.write(bytes_command)
-        self.ser.readline()
-        success = number_of_bytes_to_write == number_of_bytes_written
-        assert success
+        self.send_bytes_command(bytes_command)
 
     def on(self) -> None:
         self.send_str_command('la on')

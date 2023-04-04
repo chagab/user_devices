@@ -26,7 +26,8 @@ class LatticeGen(Device):
         )
         self.name = name
         self.BLACS_connection = addr
-        self.start_commands = []
+        self.start_commands = {}
+        self.stop_commands = {}
     
     def dict_to_hdf5_group(self, group, dictionary):
         for key, value in dictionary.items():
@@ -40,19 +41,41 @@ class LatticeGen(Device):
     
     def add_start_command(self, command):
         """Add a serial command that should be send at the start of the experiment"""
-        if not isinstance(command, bytes):
-            raise TypeError("command must be a bytestring")
-        self.start_commands.append(command)
+        if not isinstance(command, dict):
+            raise TypeError("command must be a dict")
+        for command, argument in command.items():
+            self.start_commands[command] = argument
     
+    def add_stop_command(self, command):
+        """Add an instruction that should be done at the end of the experiment"""
+        if not isinstance(command, dict):
+            raise TypeError("command must be a dict")
+        for command, argument in command.items():
+            self.stop_commands[command] = argument
 
     def test(self, arg):
         self.add_start_command({
-            'test': arg
+            'test': {
+                'arg' : arg
+            }
+        })
+
+    def test_stop(self, arg):
+        self.add_stop_command({
+            'test': {
+                'arg' : arg
+            }
         })
 
     def generate_code(self, hdf5_file):
         group = self.init_device_group(hdf5_file)
+        start_group = group.create_group('START_COMMANDS')
+        stop_group = group.create_group('STOP_COMMANDS')
         if len(self.start_commands) > 0:
-            self.dict_to_hdf5_group(group, self.start_commands)
+            self.dict_to_hdf5_group(start_group, self.start_commands)
         else:
             print("No start commands")
+        if len(self.stop_commands) > 0:
+            self.dict_to_hdf5_group(stop_group, self.stop_commands)
+        else:
+            print("No stop commands")

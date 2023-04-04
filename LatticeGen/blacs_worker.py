@@ -28,11 +28,13 @@ class LatticeGenWorker(Worker):
         with h5py.File(self.shot_file, 'r') as hdf5_file:
             group = hdf5_file[f'devices/{self.device_name}']
             if 'START_COMMANDS' in group:
-                start_commands = self.hdf5_group_to_dict(group)
+                start_commands = group['START_COMMANDS']
+                start_commands_dict = self.hdf5_group_to_dict(start_commands)
             else:
                 start_commands = None
-
-        for command, argument in start_commands:
+                start_commands_dict = None
+        
+        for command, argument in start_commands_dict.items():
             print(f'sending command: {command}')
             if argument is None:
                 getattr(self, command)()
@@ -45,7 +47,30 @@ class LatticeGenWorker(Worker):
         does any necessary configuration to take the device out of buffered mode
         and is used to read any measurements and save them to the shot h5 file
         as results."""
+        with h5py.File(self.shot_file, 'r') as hdf5_file:
+            group = hdf5_file[f'devices/{self.device_name}']
+            if 'STOP_COMMANDS' in group:
+                stop_commands = group['STOP_COMMANDS']
+                stop_commands_dict = self.hdf5_group_to_dict(stop_commands)
+            else:
+                stop_commands = None
+                stop_commands_dict = None 
+            
+        for command, argument in stop_commands_dict.items():
+            print(f'sending command: {command}')
+            if argument is None:
+                getattr(self, command)()
+            else: 
+                getattr(self, command)(**argument)
         return True
+
+    def abort_transition_to_buffered(self):
+        # This is called if transition_to_buffered fails with an exception or returns
+        # False.
+        # Forget the shot file:
+        self.shot_file = None
+        print("transition_to_buffered failed")
+        return True  # Indicates success
     
 
     def hdf5_group_to_dict(self, group):

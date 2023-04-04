@@ -1,6 +1,5 @@
 from blacs.tab_base_classes import Worker
 from labscript_utils import properties
-from user_devices.IBeamSmart.IBeamSmart import IBeamSmart
 # import h5py
 
 
@@ -9,6 +8,8 @@ class IBeamSmartWorker(Worker):
     def init(self):
         """This method initialises communications with the device. Not to be
         confused with the standard python class __init__ method."""
+        global IBeamSmart
+        from .IBeamSmart import IBeamSmart
         self.IBeamSmart = IBeamSmart(self.USB_port)
 
     def program_manual(self, values):

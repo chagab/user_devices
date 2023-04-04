@@ -26,10 +26,10 @@ class MPBCFiberLaserTab(DeviceTab):
             ("Laser output power", ao_widgets)
         )
 
+    def initialise_workers(self):
         # Store the board number to be used
-        connection_object = self.settings['connection_table'].find_by_name(
-            self.device_name
-        )
+        connection__table = self.settings['connection_table']
+        connection_object = connection__table.find_by_name(self.device_name)
         self.board_number = int(connection_object.BLACS_connection)
 
         # And which scheme we're using for buffered output programming and
@@ -43,6 +43,7 @@ class MPBCFiberLaserTab(DeviceTab):
         worker_initialisation_kwargs = \
             self.connection_table.find_by_name(self.device_name).properties
         worker_initialisation_kwargs['addr'] = self.BLACS_connection
+
         self.create_worker(
             'main_worker',
             'user_devices.MPBCFiberLaser.blacs_worker.MPBCFiberLaserWorker',

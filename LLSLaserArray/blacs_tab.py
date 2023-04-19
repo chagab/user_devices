@@ -25,7 +25,8 @@ class LLSLaserArrayTab(DeviceTab):
                 'min': 0,
                 'max': 300,
                 'step': 1e-3,
-                'decimals': 1
+                'decimals': 1,
+                'default': 1
             },
             'Power 444nm': {
                 'base_unit': 'mW',

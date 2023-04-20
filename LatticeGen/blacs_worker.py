@@ -1,6 +1,8 @@
 from blacs.tab_base_classes import Worker
 import labscript_utils.h5_lock
 import h5py
+from .llspy_slm.slmgen.slm import linear_bessel_array, ronchi_ruling, hex_lattice
+import os 
 
 class LatticeGenWorker(Worker):
 
@@ -89,6 +91,25 @@ class LatticeGenWorker(Worker):
                 isinstance(value, h5py.Dataset) and len(value.shape) == 1 else value[()]
         return result
 
+    
+    def generate_pattern(self, mode, params):
+        pattern_path = os.path.split(self.shot_file)[0]
+        if mode == "square":
+            output = linear_bessel_array(outdir=pattern_path, pattern_only=True, **params)
+        elif mode == "hex":
+            output = hex_lattice(outdir=pattern_path, pattern_only=True, **params)
+        elif mode == "ronchi":
+            width = params.get("width", 1)
+            slm_xpix = params.get("slm_xpix", 1280)
+            slm_ypix = params.get("slm_ypix", 1024)
+            # orientation = params.get('orientation', 'horizontal')
+            output = (ronchi_ruling(width, slm_xpix, slm_ypix),)
 
-    def test(self, arg):
-        print(arg)
+
+
+    def abort_buffered(self):
+        # Called when a shot is aborted. We may or may not want to run
+        # transition_to_manual in this case. If not, then this method should do whatever
+        # else it needs to, and then return True. It should make sure to clear any state
+        # were storing about this shot (e.g. it should set self.shot_file = None)
+        return self.transition_to_manual()

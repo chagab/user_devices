@@ -1,4 +1,5 @@
 from labscript import Device, set_passed_properties
+from numpy import dtype
 
 
 class LatticeGen(Device):
@@ -53,20 +54,6 @@ class LatticeGen(Device):
         for command, argument in command.items():
             self.stop_commands[command] = argument
 
-    def test(self, arg):
-        self.add_start_command({
-            'test': {
-                'arg' : arg
-            }
-        })
-
-    def test_stop(self, arg):
-        self.add_stop_command({
-            'test': {
-                'arg' : arg
-            }
-        })
-
     def generate_code(self, hdf5_file):
         group = self.init_device_group(hdf5_file)
         start_group = group.create_group('START_COMMANDS')
@@ -79,3 +66,12 @@ class LatticeGen(Device):
             self.dict_to_hdf5_group(stop_group, self.stop_commands)
         else:
             print("No stop commands")
+
+    def generate_pattern(self, mode, params):
+        assert mode in ["square", "hex", "ronchi"]
+        self.add_start_command({
+            'generate_pattern': {
+                'mode' : mode,
+                'params' : params
+            }
+        })
